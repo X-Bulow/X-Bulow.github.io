@@ -37,4 +37,16 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { research, notes };
+// Pages under Misc (src/content/misc/): interests, hobbies, anything outside research.
+// Each file becomes /misc/<file-name>/. Drafts are visible only in `npm run dev`.
+const misc = defineCollection({
+  loader: glob({ base: './src/content/misc', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    order: z.number().default(100), // lower comes first
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { research, notes, misc };

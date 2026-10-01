@@ -37,11 +37,11 @@ export const profileLinks: ProfileLink[] = [
   // { label: 'LinkedIn', url: 'https://www.linkedin.com/in/XXXX', icon: 'linkedin' },
 ];
 
-// Pages without content hide themselves: Notes appears once a note is published.
+// `matches` lists other paths that count as "this page" in the navigation.
 export const nav = [
   { label: 'About', href: '/' },
   { label: 'Publications', href: '/publications/' },
   { label: 'Research', href: '/research/' },
-  { label: 'Notes', href: '/notes/' },
   { label: 'CV', href: '/cv/' },
+  { label: 'Misc', href: '/misc/', matches: ['/notes/'] },
 ];

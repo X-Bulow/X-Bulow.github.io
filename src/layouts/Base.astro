@@ -1,10 +1,15 @@
 ---
+// Plain skin fonts
+import '@fontsource-variable/inter';
+import '@fontsource-variable/source-serif-4';
+// Rusty Lake skin fonts (only downloaded by the browser when that skin is active)
 import '@fontsource/old-standard-tt/400.css';
 import '@fontsource/old-standard-tt/400-italic.css';
 import '@fontsource/old-standard-tt/700.css';
 import '@fontsource-variable/crimson-pro';
 import '@fontsource-variable/crimson-pro/wght-italic.css';
 import '@fontsource/special-elite';
+// Code
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -42,7 +47,6 @@ const person = {
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0f171a" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
@@ -50,13 +54,22 @@ const person = {
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
     <script is:inline>
-      // Dark (the lake at night) is the default; "light" is aged paper.
+      // Two skins: "plain" (default) and "lake" (Rusty Lake). Each has a light and
+      // a dark theme; plain follows the system, lake is dark unless switched.
       (() => {
-        let stored = null;
+        let skin = null;
+        let theme = null;
         try {
-          stored = localStorage.getItem('theme');
+          skin = localStorage.getItem('skin');
+          theme = localStorage.getItem('theme');
         } catch {}
-        document.documentElement.dataset.theme = stored === 'light' ? 'light' : 'dark';
+        const root = document.documentElement;
+        root.dataset.skin = skin === 'lake' ? 'lake' : 'plain';
+        if (theme !== 'light' && theme !== 'dark') {
+          const systemDark = matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = root.dataset.skin === 'lake' || systemDark ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
       })();
     </script>
     {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify(person)} />}

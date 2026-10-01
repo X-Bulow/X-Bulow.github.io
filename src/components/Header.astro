@@ -1,14 +1,11 @@
 ---
 import { nav, site } from '../config';
-import { getNotes } from '../lib/collections';
 import Icon from './Icon.astro';
 import Ornament from './Ornament.astro';
 
-const hasNotes = (await getNotes()).length > 0;
-const items = nav.filter((item) => item.href !== '/notes/' || hasNotes);
-
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const isCurrent = (item: (typeof nav)[number]) =>
+  item.href === '/' ? path === '/' : [item.href, ...(item.matches ?? [])].some((p) => path.startsWith(p));
 ---
 
 <header class="site-header">
@@ -20,9 +17,9 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <nav aria-label="Main">
       <ul>
         {
-          items.map((item) => (
+          nav.map((item) => (
             <li>
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -30,20 +27,44 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         }
       </ul>
     </nav>
-    <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light and dark mode">
-      <Icon name="moon" class="when-light" />
-      <Icon name="sun" class="when-dark" />
-    </button>
+    <div class="header-controls">
+      <button class="skin-toggle" type="button" aria-pressed="false" title="Switch between the plain and the Rusty Lake style">
+        <Icon name="cube" />
+        <span class="when-plain">Rusty Lake</span>
+        <span class="when-lake">Plain</span>
+      </button>
+      <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light and dark mode">
+        <Icon name="moon" class="when-light" />
+        <Icon name="sun" class="when-dark" />
+      </button>
+    </div>
   </div>
 </header>
 
 <script>
-  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    root.dataset.theme = next;
+  const root = document.documentElement;
+  const save = (key: string, value: string | null) => {
     try {
-      localStorage.setItem('theme', next);
+      value === null ? localStorage.removeItem(key) : localStorage.setItem(key, value);
     } catch {}
+  };
+  const systemTheme = () => (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  const skinToggle = document.querySelector<HTMLButtonElement>('.skin-toggle');
+  skinToggle?.setAttribute('aria-pressed', String(root.dataset.skin === 'lake'));
+  skinToggle?.addEventListener('click', () => {
+    const lake = root.dataset.skin !== 'lake';
+    root.dataset.skin = lake ? 'lake' : 'plain';
+    // Each skin starts from its own default theme.
+    root.dataset.theme = lake ? 'dark' : systemTheme();
+    save('skin', lake ? 'lake' : null);
+    save('theme', null);
+    skinToggle.setAttribute('aria-pressed', String(lake));
+  });
+
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    save('theme', next);
   });
 </script>

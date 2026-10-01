@@ -1,72 +1,77 @@
-/* ---------- Tokens ----------
-   Dark is the default: the lake at night. Light is aged paper.
-   Gold is the accent, teal the secondary, red only for ink stamps. */
+/* =====================================================================
+   Two skins share one markup:
+     plain  (default)  a clean academic page, light or dark with the system
+     lake              the Rusty Lake look, dark by default, "aged paper" light
+   Skin-independent structure comes first; everything the lake skin changes
+   is scoped under [data-skin='lake'] at the end.
+   ===================================================================== */
+
+/* ---------- Tokens: plain skin ---------- */
 
 :root {
-  --bg: #0f171a;
-  --surface: #162025;
-  --surface-2: #1b282e;
-  --text: #e3d9bf;
-  --muted: #a89e85;
-  --faint: #908770;
-  --border: #2c3a3f;
-  --border-strong: #425358;
-  --accent: #c9a24f;
-  --accent-hover: #e3bf69;
-  --accent-soft: rgb(201 162 79 / 0.1);
-  --teal: #5f9a98;
-  --red: #d6625a;
-  --frame: #2b1d14;
-  --frame-light: #4a3522;
-  --crow-fill: #0b1114;
-  --crow-stroke: #c9a24f;
-  --code-bg: #0b1114;
-  --shadow: rgb(0 0 0 / 0.5);
-  --grain-opacity: 0.07;
-  --vignette: rgb(0 0 0 / 0.55);
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f2f0eb;
+  --text: #1d2026;
+  --muted: #5b616c;
+  --faint: #868c97;
+  --border: #e4e1da;
+  --border-strong: #cfcbc2;
+  --accent: #1f4f9e;
+  --accent-hover: #163b78;
+  --accent-soft: #e9eef8;
+  --code-bg: #f2f0eb;
+  --shadow: rgb(0 0 0 / 0.06);
 
-  --cube: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c9a24f' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M32 6 54 19v26L32 58 10 45V19z'/%3E%3Cpath d='M32 32V6M32 32 10 19M32 32l22-13M32 32v26'/%3E%3C/g%3E%3C/svg%3E");
-  --ripples: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16' viewBox='0 0 48 16'%3E%3Cpath d='M0 8c6-5 12-5 24 0s18 5 24 0' fill='none' stroke='%235f9a98' stroke-width='1.2' stroke-opacity='.28'/%3E%3C/svg%3E");
+  --review-fg: #7f5300;
+  --review-bg: #fbf0d9;
+  --neutral-fg: #4a5160;
+  --neutral-bg: #eceef1;
+  --ok-fg: #1b6535;
+  --ok-bg: #e2f2e7;
 
-  --font-display: 'Old Standard TT', 'Times New Roman', Georgia, serif;
-  --font-body: 'Crimson Pro Variable', Georgia, 'Times New Roman', serif;
-  --font-type: 'Special Elite', 'Courier New', Courier, monospace;
+  --font-heading: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-label: var(--font-body);
   --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --body-size: 1.0625rem;
+  --heading-weight: 600;
+  --label-size: 0.9rem;
+  --label-spacing: 0;
+  --label-transform: none;
+  --radius: 10px;
+  --header-rule: 1px solid var(--border);
 
   --measure: 46rem;
   --gutter: clamp(1rem, 4vw, 2rem);
-  --radius: 3px;
-
-  color-scheme: dark;
-}
-
-:root[data-theme='light'] {
-  --bg: #e7dcc2;
-  --surface: #efe6cf;
-  --surface-2: #e2d6b8;
-  --text: #2a231c;
-  --muted: #5f5342;
-  --faint: #6a5d49;
-  --border: #c6b791;
-  --border-strong: #a8976c;
-  --accent: #6b4c10;
-  --accent-hover: #4b3408;
-  --accent-soft: rgb(107 76 16 / 0.1);
-  --teal: #27605f;
-  --red: #962c26;
-  --frame: #3a2a1b;
-  --frame-light: #5c4530;
-  --crow-fill: #2a231c;
-  --crow-stroke: #2a231c;
-  --code-bg: #ddd1b1;
-  --shadow: rgb(60 40 10 / 0.3);
-  --grain-opacity: 0.1;
-  --vignette: rgb(70 50 20 / 0.28);
-
-  --cube: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%236b4c10' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M32 6 54 19v26L32 58 10 45V19z'/%3E%3Cpath d='M32 32V6M32 32 10 19M32 32l22-13M32 32v26'/%3E%3C/g%3E%3C/svg%3E");
-  --ripples: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16' viewBox='0 0 48 16'%3E%3Cpath d='M0 8c6-5 12-5 24 0s18 5 24 0' fill='none' stroke='%2327605f' stroke-width='1.2' stroke-opacity='.3'/%3E%3C/svg%3E");
 
   color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #121418;
+  --surface: #181b20;
+  --surface-2: #1f232a;
+  --text: #e5e7eb;
+  --muted: #a2a8b3;
+  --faint: #7b818c;
+  --border: #2a2e35;
+  --border-strong: #3a3f48;
+  --accent: #8fb3ff;
+  --accent-hover: #b5ceff;
+  --accent-soft: #1b2638;
+  --code-bg: #1d2026;
+  --shadow: rgb(0 0 0 / 0.3);
+
+  --review-fg: #f0c766;
+  --review-bg: #3a2f14;
+  --neutral-fg: #b9bfca;
+  --neutral-bg: #262a31;
+  --ok-fg: #82d29d;
+  --ok-bg: #163020;
+
+  color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
@@ -87,57 +92,38 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1.15rem;
-  line-height: 1.6;
+  font-size: var(--body-size);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Film grain and a vignette over everything, like an old photograph. */
-body::before,
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 100;
-}
-
-body::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: var(--grain-opacity);
-}
-
-body::after {
-  background: radial-gradient(ellipse at center, transparent 55%, var(--vignette) 130%);
-}
-
 main {
   flex: 1;
-  padding-block: 2.75rem 4.5rem;
+  padding-block: 2.5rem 4rem;
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
   line-height: 1.25;
   margin: 0;
 }
 
 h1 {
-  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.5rem);
+  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.4rem);
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.45rem;
 }
 
 h3 {
-  font-size: 1.22rem;
+  font-size: 1.12rem;
 }
 
 p {
@@ -152,19 +138,19 @@ a {
 a:hover {
   color: var(--accent-hover);
   text-decoration: underline;
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 
 :focus-visible {
-  outline: 1px dashed var(--accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 code,
 pre {
   font-family: var(--font-mono);
-  font-size: 0.82em;
+  font-size: 0.88em;
 }
 
 img {
@@ -173,10 +159,10 @@ img {
 }
 
 .icon {
-  width: 1em;
-  height: 1em;
+  width: 1.05em;
+  height: 1.05em;
   flex: none;
-  vertical-align: -0.12em;
+  vertical-align: -0.15em;
 }
 
 .svg-defs {
@@ -186,12 +172,27 @@ img {
   overflow: hidden;
 }
 
-/* Typewriter labels: dates, tags, navigation, stamps. */
-.type {
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+/* Ornaments only exist in the lake skin. */
+.ornament {
+  display: none;
+}
+
+/* Small labels: navigation, dates, tags, chips, "more" links. */
+.site-header nav a,
+.back,
+.more,
+.chip,
+.tags li,
+.news time,
+.note-list time,
+.entry-date,
+.location,
+.profile-links,
+.site-footer {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-spacing);
+  text-transform: var(--label-transform);
 }
 
 .container {
@@ -208,6 +209,7 @@ img {
   padding: 0.4rem 0.8rem;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 6px;
   z-index: 101;
 }
 
@@ -215,42 +217,10 @@ img {
   left: 0.5rem;
 }
 
-/* ---------- Ornaments ---------- */
-
-.ornament {
-  display: block;
-  color: var(--accent);
-  filter: url('#sketch');
-}
-
-.ornament-cube {
-  width: 1.1em;
-  height: 1.1em;
-}
-
-.ornament-waves {
-  width: 9rem;
-  height: auto;
-  opacity: 0.8;
-}
-
-.ornament-crow {
-  width: 4.75rem;
-  height: auto;
-  color: var(--crow-stroke);
-}
-
-.crow-body {
-  fill: var(--crow-fill);
-  stroke: var(--crow-stroke);
-  stroke-width: 1.6;
-  stroke-linejoin: round;
-}
-
 /* ---------- Header & footer ---------- */
 
 .site-header {
-  border-bottom: 3px double var(--border-strong);
+  border-bottom: var(--header-rule);
 }
 
 .header-inner {
@@ -265,21 +235,15 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: var(--heading-weight);
   color: var(--text);
 }
 
 .site-name:hover {
   color: var(--text);
   text-decoration: none;
-}
-
-.site-mark {
-  width: 1.25rem;
-  height: 1.25rem;
 }
 
 .site-header nav {
@@ -289,48 +253,71 @@ img {
 .site-header ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.4rem;
+  gap: 0.25rem 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .site-header nav a {
-  font-family: var(--font-type);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--muted);
-  padding-block: 0.3rem;
+  font-weight: 500;
+  padding-block: 0.25rem;
 }
 
 .site-header nav a:hover,
 .site-header nav a[aria-current='page'] {
-  color: var(--accent);
+  color: var(--text);
   text-decoration: none;
-  box-shadow: inset 0 -1px 0 var(--accent);
+  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skin-toggle,
 .theme-toggle {
-  display: grid;
-  place-items: center;
-  width: 2.1rem;
-  height: 2.1rem;
-  padding: 0;
-  border: 1px solid var(--border-strong);
-  border-radius: 50%;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
   color: var(--muted);
+  font-family: var(--font-label);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: var(--label-spacing);
+  text-transform: var(--label-transform);
   cursor: pointer;
 }
 
+.theme-toggle {
+  width: 2.25rem;
+  padding: 0;
+}
+
+.skin-toggle:hover,
 .theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.skin-toggle[aria-pressed='true'] {
   color: var(--accent);
   border-color: var(--accent);
 }
 
-[data-theme='light'] .when-dark,
-:root:not([data-theme='light']) .when-light {
+[data-skin='lake'] .when-plain,
+:root:not([data-skin='lake']) .when-lake,
+[data-theme='dark'] .when-light,
+:root:not([data-theme='dark']) .when-dark {
   display: none;
 }
 
@@ -341,22 +328,16 @@ img {
     margin-left: 0;
   }
 
-  .theme-toggle {
+  .header-controls {
     margin-left: auto;
   }
 }
 
 .site-footer {
   position: relative;
-  border-top: 1px solid var(--border-strong);
-  background:
-    var(--ripples) center top / 48px 16px repeat,
-    linear-gradient(to bottom, var(--bg), var(--surface));
+  border-top: 1px solid var(--border);
   color: var(--faint);
-  font-family: var(--font-type);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
 }
 
 .footer-inner {
@@ -365,14 +346,7 @@ img {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.25rem 1rem;
-  padding-block: 2.5rem 1.75rem;
-}
-
-/* The crow perches on the footer's top rule. */
-.footer-crow {
-  position: absolute;
-  right: calc(var(--gutter) + 0.5rem);
-  top: -2.8rem;
+  padding-block: 1.5rem;
 }
 
 /* ---------- Sections ---------- */
@@ -380,32 +354,14 @@ img {
 main > section + section,
 main > section + .year-group,
 .year-group + .year-group {
-  margin-top: 3.25rem;
+  margin-top: 3rem;
 }
 
 main > section > h2,
 .year-group > h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1.25rem;
-}
-
-main > section > h2::before,
-.year-group > h2::before {
-  content: '';
-  flex: none;
-  width: 0.9em;
-  height: 0.9em;
-  background: var(--cube) center / contain no-repeat;
-}
-
-main > section > h2::after,
-.year-group > h2::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, var(--border-strong), transparent);
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .page-header {
@@ -413,62 +369,47 @@ main > section > h2::after,
 }
 
 .page-header h1 + * {
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
 }
 
 .lede {
   color: var(--muted);
-  font-style: italic;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .empty {
   color: var(--muted);
-  font-style: italic;
 }
 
 .back {
   display: inline-block;
   margin-bottom: 1.25rem;
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .more {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 1.1rem;
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-weight: 500;
 }
 
 /* ---------- Profile (home) ---------- */
 
 .profile {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  text-align: center;
-  margin-bottom: 2.75rem;
+  gap: 2rem;
+  margin-bottom: 2.25rem;
 }
 
-/* An oval portrait in a wooden frame with a gold inlay. */
 .portrait {
-  width: 10rem;
-  height: 12.5rem;
+  width: 11rem;
+  height: 11rem;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid var(--frame);
-  box-shadow:
-    0 0 0 1px var(--accent),
-    0 0 0 5px var(--frame),
-    0 0 0 6px var(--frame-light),
-    0 12px 28px var(--shadow);
+  border: 1px solid var(--border);
   background: var(--surface-2);
 }
 
@@ -476,7 +417,6 @@ main > section > h2::after,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: sepia(0.3) contrast(1.05);
 }
 
 .monogram {
@@ -484,23 +424,13 @@ main > section > h2::after,
   place-items: center;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at 50% 35%, #223a3f, #121d21 75%);
+  background: linear-gradient(145deg, var(--accent-soft), var(--surface));
   color: var(--accent);
-  font-family: var(--font-display);
-  font-size: 3.2rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-heading);
+  font-size: 3.4rem;
+  font-weight: var(--heading-weight);
+  letter-spacing: 0.02em;
   user-select: none;
-}
-
-[data-theme='light'] .monogram {
-  background: radial-gradient(ellipse at 50% 35%, #d9ccaa, #bfae84 75%);
-}
-
-.name {
-  margin-top: 1.5rem;
-  font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .position {
@@ -508,49 +438,40 @@ main > section > h2::after,
   flex-direction: column;
   margin-top: 0.6rem;
   color: var(--muted);
-  font-style: italic;
-  font-size: 1.15rem;
 }
 
 .location {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
   color: var(--faint);
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .profile-links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem 1.4rem;
+  gap: 0.4rem 1.1rem;
   list-style: none;
-  margin: 1.1rem 0 0;
+  margin: 0.9rem 0 0;
   padding: 0;
-  font-family: var(--font-type);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
 }
 
 .profile-links a {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-}
-
-.profile-waves {
-  margin-top: 2rem;
+  gap: 0.4rem;
 }
 
 @media (max-width: 40rem) {
+  .profile {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   .portrait {
     width: 7.5rem;
-    height: 9.4rem;
+    height: 7.5rem;
   }
 
   .monogram {
@@ -566,7 +487,7 @@ main > section > h2::after,
 
 .interests {
   display: grid;
-  gap: 1rem;
+  gap: 0.85rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -574,15 +495,9 @@ main > section > h2::after,
 
 .interests li {
   display: grid;
-  gap: 0.15rem;
-  padding-left: 1.1rem;
-  border-left: 1px solid var(--border-strong);
-}
-
-.interests strong {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.15rem;
+  gap: 0.1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent-soft);
 }
 
 .interests span {
@@ -591,7 +506,7 @@ main > section > h2::after,
 
 .news {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.6rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -607,16 +522,13 @@ main > section > h2::after,
 .note-list time,
 .entry-date {
   color: var(--faint);
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .news time,
 .note-list time {
-  padding-top: 0.3rem;
+  padding-top: 0.12rem;
 }
 
 @media (max-width: 30rem) {
@@ -626,55 +538,53 @@ main > section > h2::after,
   }
 }
 
-/* ---------- Stamps, chips, tags ---------- */
+/* ---------- Badges, chips, tags ---------- */
 
-/* Status badges look like ink stamps on a case file. */
 .badge {
   display: inline-block;
-  padding: 0.05rem 0.45rem;
-  border: 1.5px solid currentColor;
-  border-radius: 2px;
-  font-family: var(--font-type);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1.6;
-  text-transform: uppercase;
-  vertical-align: 0.25em;
+  vertical-align: 0.2em;
   white-space: nowrap;
-  transform: rotate(-2deg);
-  opacity: 0.9;
 }
 
 h1 .badge,
 h3 .badge {
-  margin-left: 0.6rem;
+  margin-left: 0.5rem;
 }
 
 .badge-under-review {
-  color: var(--red);
+  color: var(--review-fg);
+  background: var(--review-bg);
 }
 
 .badge-preprint {
-  color: var(--muted);
+  color: var(--neutral-fg);
+  background: var(--neutral-bg);
 }
 
 .badge-accepted,
 .badge-ongoing {
-  color: var(--teal);
+  color: var(--ok-fg);
+  background: var(--ok-bg);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.65rem;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
+  gap: 0.3rem;
+  padding: 0.12rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
   color: var(--text);
-  font-family: var(--font-type);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -689,35 +599,32 @@ h3 .badge {
   flex-wrap: wrap;
   gap: 0.4rem;
   list-style: none;
-  margin: 0.8rem 0 0;
+  margin: 0.75rem 0 0;
   padding: 0;
 }
 
 .tags li {
-  padding: 0.05rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--muted);
-  font-family: var(--font-type);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding: 0.05rem 0.55rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 /* ---------- Publications ---------- */
 
 .pubs {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.4rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .pub-title {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  line-height: 1.35;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .pub-title a {
@@ -729,22 +636,23 @@ h3 .badge {
 }
 
 .pub-authors {
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   color: var(--muted);
+  font-size: 0.97rem;
 }
 
 .pub-authors strong {
   color: var(--text);
-  font-weight: 600;
 }
 
 .pub-venue {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.3rem;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
   color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .pub-venue .badge {
@@ -752,8 +660,8 @@ h3 .badge {
 }
 
 .pub-note {
-  color: var(--accent);
-  font-style: italic;
+  color: var(--review-fg);
+  font-weight: 600;
 }
 
 .pub-links {
@@ -761,7 +669,7 @@ h3 .badge {
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0.45rem;
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
 }
 
 .bibtex summary {
@@ -777,29 +685,28 @@ h3 .badge {
 }
 
 .bibtex pre {
-  margin: 0.6rem 0 0;
+  margin: 0.5rem 0 0;
   padding: 0.9rem 1rem;
   overflow-x: auto;
   border: 1px solid var(--border);
+  border-radius: 8px;
   background: var(--code-bg);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
-/* ---------- Cards (framed like plaques) ---------- */
+/* ---------- Cards ---------- */
 
 .cards {
   display: grid;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .card {
-  padding: 1.35rem 1.5rem;
-  border: 1px solid var(--border-strong);
-  outline: 1px solid var(--border);
-  outline-offset: -5px;
+  padding: 1.15rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   background: var(--surface);
-  box-shadow: 0 6px 20px var(--shadow);
 }
 
 .card h3 a {
@@ -811,17 +718,17 @@ h3 .badge {
 }
 
 .card-meta {
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 0.93rem;
 }
 
 .card-summary {
-  margin-top: 0.6rem;
+  margin-top: 0.55rem;
 }
 
 .card .more {
-  margin-top: 0.9rem;
+  margin-top: 0.75rem;
 }
 
 /* ---------- CV ---------- */
@@ -834,32 +741,31 @@ h3 .badge {
   gap: 1rem;
 }
 
-.cv-header .profile-links {
-  justify-content: flex-start;
-}
-
 .button {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.1rem;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
   border: 1px solid var(--accent);
-  border-radius: var(--radius);
-  color: var(--accent);
-  font-family: var(--font-type);
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  letter-spacing: var(--label-spacing);
+  text-transform: var(--label-transform);
 }
 
 .button:hover {
-  background: var(--accent-soft);
-  color: var(--accent-hover);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--bg);
   text-decoration: none;
 }
 
 .entry + .entry {
-  margin-top: 1.6rem;
+  margin-top: 1.5rem;
 }
 
 .entry-head {
@@ -872,12 +778,12 @@ h3 .badge {
 
 .entry-sub {
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: 0.97rem;
 }
 
 .entry ul,
 .plain-list {
-  margin: 0.5rem 0 0;
+  margin: 0.45rem 0 0;
   padding-left: 1.2rem;
 }
 
@@ -889,12 +795,12 @@ h3 .badge {
 .skills {
   display: grid;
   grid-template-columns: max-content 1fr;
-  gap: 0.45rem 1.5rem;
+  gap: 0.4rem 1.5rem;
   margin: 0;
 }
 
 .skills dt {
-  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 .skills dd {
@@ -917,7 +823,7 @@ h3 .badge {
 
 .note-list {
   display: grid;
-  gap: 1.3rem;
+  gap: 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -930,8 +836,7 @@ h3 .badge {
 }
 
 .note-list a {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .note-list .badge {
@@ -941,6 +846,7 @@ h3 .badge {
 .note-list p {
   margin-top: 0.15rem;
   color: var(--muted);
+  font-size: 0.97rem;
 }
 
 @media (max-width: 30rem) {
@@ -958,7 +864,7 @@ h3 .badge {
 
 .prose h2 {
   margin-top: 2rem;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
 }
 
 .prose h3 {
@@ -977,14 +883,13 @@ h3 .badge {
 .prose blockquote {
   margin-inline: 0;
   padding-left: 1rem;
-  border-left: 2px solid var(--border-strong);
+  border-left: 3px solid var(--border);
   color: var(--muted);
-  font-style: italic;
 }
 
 .prose :not(pre) > code {
   padding: 0.1em 0.35em;
-  border-radius: var(--radius);
+  border-radius: 4px;
   background: var(--code-bg);
 }
 
@@ -992,12 +897,14 @@ h3 .badge {
   padding: 1rem 1.1rem;
   overflow-x: auto;
   border: 1px solid var(--border);
+  border-radius: 8px;
   line-height: 1.55;
 }
 
 .prose table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.95rem;
 }
 
 .prose th,
@@ -1007,8 +914,504 @@ h3 .badge {
   text-align: left;
 }
 
-.prose th {
-  font-family: var(--font-type);
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Shiki renders both themes inline; show the dark one in dark mode. */
+[data-theme='dark'] .astro-code,
+[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+/* =====================================================================
+   Rusty Lake skin
+   ===================================================================== */
+
+:root[data-skin='lake'] {
+  --bg: #0f171a;
+  --surface: #162025;
+  --surface-2: #1b282e;
+  --text: #e3d9bf;
+  --muted: #a89e85;
+  --faint: #908770;
+  --border: #2c3a3f;
+  --border-strong: #425358;
+  --accent: #c9a24f;
+  --accent-hover: #e3bf69;
+  --accent-soft: rgb(201 162 79 / 0.1);
+  --code-bg: #0b1114;
+  --shadow: rgb(0 0 0 / 0.5);
+
+  /* Stamps: ink only, no fill. */
+  --review-fg: #d6625a;
+  --review-bg: transparent;
+  --neutral-fg: #a89e85;
+  --neutral-bg: transparent;
+  --ok-fg: #5f9a98;
+  --ok-bg: transparent;
+
+  --frame: #2b1d14;
+  --frame-light: #4a3522;
+  --crow-fill: #0b1114;
+  --crow-stroke: #c9a24f;
+  --grain-opacity: 0.07;
+  --vignette: rgb(0 0 0 / 0.55);
+  --cube: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c9a24f' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M32 6 54 19v26L32 58 10 45V19z'/%3E%3Cpath d='M32 32V6M32 32 10 19M32 32l22-13M32 32v26'/%3E%3C/g%3E%3C/svg%3E");
+  --ripples: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16' viewBox='0 0 48 16'%3E%3Cpath d='M0 8c6-5 12-5 24 0s18 5 24 0' fill='none' stroke='%235f9a98' stroke-width='1.2' stroke-opacity='.28'/%3E%3C/svg%3E");
+
+  --font-heading: 'Old Standard TT', 'Times New Roman', Georgia, serif;
+  --font-body: 'Crimson Pro Variable', Georgia, 'Times New Roman', serif;
+  --font-label: 'Special Elite', 'Courier New', Courier, monospace;
+
+  --body-size: 1.15rem;
+  --heading-weight: 400;
+  --label-size: 0.78rem;
+  --label-spacing: 0.08em;
+  --label-transform: uppercase;
+  --radius: 3px;
+  --header-rule: 3px double var(--border-strong);
+
+  color-scheme: dark;
+}
+
+:root[data-skin='lake'][data-theme='light'] {
+  --bg: #e7dcc2;
+  --surface: #efe6cf;
+  --surface-2: #e2d6b8;
+  --text: #2a231c;
+  --muted: #5f5342;
+  --faint: #6a5d49;
+  --border: #c6b791;
+  --border-strong: #a8976c;
+  --accent: #6b4c10;
+  --accent-hover: #4b3408;
+  --accent-soft: rgb(107 76 16 / 0.1);
+  --code-bg: #ddd1b1;
+  --shadow: rgb(60 40 10 / 0.3);
+
+  --review-fg: #962c26;
+  --neutral-fg: #5f5342;
+  --ok-fg: #27605f;
+
+  --frame: #3a2a1b;
+  --frame-light: #5c4530;
+  --crow-fill: #2a231c;
+  --crow-stroke: #2a231c;
+  --grain-opacity: 0.1;
+  --vignette: rgb(70 50 20 / 0.28);
+  --cube: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%236b4c10' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M32 6 54 19v26L32 58 10 45V19z'/%3E%3Cpath d='M32 32V6M32 32 10 19M32 32l22-13M32 32v26'/%3E%3C/g%3E%3C/svg%3E");
+  --ripples: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16' viewBox='0 0 48 16'%3E%3Cpath d='M0 8c6-5 12-5 24 0s18 5 24 0' fill='none' stroke='%2327605f' stroke-width='1.2' stroke-opacity='.3'/%3E%3C/svg%3E");
+
+  color-scheme: light;
+}
+
+[data-skin='lake'] body {
+  line-height: 1.6;
+}
+
+/* Film grain and a vignette over everything, like an old photograph. */
+[data-skin='lake'] body::before,
+[data-skin='lake'] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+[data-skin='lake'] body::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+}
+
+[data-skin='lake'] body::after {
+  background: radial-gradient(ellipse at center, transparent 55%, var(--vignette) 130%);
+}
+
+[data-skin='lake'] a:hover {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+[data-skin='lake'] :focus-visible {
+  outline: 1px dashed var(--accent);
+  outline-offset: 3px;
+  border-radius: 0;
+}
+
+[data-skin='lake'] code,
+[data-skin='lake'] pre {
+  font-size: 0.82em;
+}
+
+/* Ornaments: cube, waves, crow, all with a hand-drawn wobble. */
+[data-skin='lake'] .ornament {
+  display: block;
+  color: var(--accent);
+  filter: url('#sketch');
+}
+
+[data-skin='lake'] .ornament-cube {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+[data-skin='lake'] .ornament-waves {
+  width: 9rem;
+  height: auto;
+  opacity: 0.8;
+}
+
+[data-skin='lake'] .ornament-crow {
+  width: 4.75rem;
+  height: auto;
+  color: var(--crow-stroke);
+}
+
+[data-skin='lake'] .crow-body {
+  fill: var(--crow-fill);
+  stroke: var(--crow-stroke);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+/* Header & footer */
+[data-skin='lake'] .site-name {
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+[data-skin='lake'] .site-mark {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+[data-skin='lake'] .site-header ul {
+  gap: 0.25rem 1.4rem;
+}
+
+[data-skin='lake'] .site-header nav a {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+[data-skin='lake'] .site-header nav a:hover,
+[data-skin='lake'] .site-header nav a[aria-current='page'] {
+  color: var(--accent);
+  box-shadow: inset 0 -1px 0 var(--accent);
+}
+
+[data-skin='lake'] .skin-toggle,
+[data-skin='lake'] .theme-toggle {
+  height: 2.1rem;
+  border-color: var(--border-strong);
+  background: transparent;
+  font-weight: 400;
+  font-size: 0.72rem;
+}
+
+[data-skin='lake'] .theme-toggle {
+  width: 2.1rem;
+}
+
+[data-skin='lake'] .skin-toggle:hover,
+[data-skin='lake'] .theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+[data-skin='lake'] .site-footer {
+  border-top-color: var(--border-strong);
+  background:
+    var(--ripples) center top / 48px 16px repeat,
+    linear-gradient(to bottom, var(--bg), var(--surface));
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+[data-skin='lake'] .footer-inner {
+  padding-block: 2.5rem 1.75rem;
+}
+
+/* The crow perches on the footer's top rule. */
+[data-skin='lake'] .footer-crow {
+  position: absolute;
+  right: calc(var(--gutter) + 0.5rem);
+  top: -2.8rem;
+}
+
+/* Sections: a cube and a fading rule instead of a border. */
+[data-skin='lake'] main > section + section,
+[data-skin='lake'] main > section + .year-group,
+[data-skin='lake'] .year-group + .year-group {
+  margin-top: 3.25rem;
+}
+
+[data-skin='lake'] main > section > h2,
+[data-skin='lake'] .year-group > h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+  font-size: 1.5rem;
+}
+
+[data-skin='lake'] main > section > h2::before,
+[data-skin='lake'] .year-group > h2::before {
+  content: '';
+  flex: none;
+  width: 0.9em;
+  height: 0.9em;
+  background: var(--cube) center / contain no-repeat;
+}
+
+[data-skin='lake'] main > section > h2::after,
+[data-skin='lake'] .year-group > h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border-strong), transparent);
+}
+
+[data-skin='lake'] h1 {
+  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.5rem);
+}
+
+[data-skin='lake'] h3 {
+  font-size: 1.22rem;
+}
+
+[data-skin='lake'] .lede,
+[data-skin='lake'] .empty {
+  font-style: italic;
+}
+
+[data-skin='lake'] .lede {
+  font-size: 1.2rem;
+}
+
+/* Profile: centred, with an oval portrait in a wooden frame. */
+[data-skin='lake'] .profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+[data-skin='lake'] .portrait {
+  width: 10rem;
+  height: 12.5rem;
+  border: 3px solid var(--frame);
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 0 5px var(--frame),
+    0 0 0 6px var(--frame-light),
+    0 12px 28px var(--shadow);
+}
+
+[data-skin='lake'] .portrait img {
+  filter: sepia(0.3) contrast(1.05);
+}
+
+[data-skin='lake'] .monogram {
+  background: radial-gradient(ellipse at 50% 35%, #223a3f, #121d21 75%);
+  font-size: 3.2rem;
+  letter-spacing: 0.05em;
+}
+
+[data-skin='lake'][data-theme='light'] .monogram {
+  background: radial-gradient(ellipse at 50% 35%, #d9ccaa, #bfae84 75%);
+}
+
+[data-skin='lake'] .name {
+  margin-top: 1.5rem;
+  font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+[data-skin='lake'] .position {
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+[data-skin='lake'] .location {
+  justify-content: center;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+[data-skin='lake'] .profile-links {
+  justify-content: center;
+  gap: 0.5rem 1.4rem;
+  margin-top: 1.1rem;
+  font-size: 0.8rem;
+}
+
+[data-skin='lake'] .cv-header .profile-links {
+  justify-content: flex-start;
+}
+
+/* Keep the e-mail address in its real case. */
+[data-skin='lake'] .email-text {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+[data-skin='lake'] .profile-waves {
+  margin-top: 2rem;
+}
+
+@media (max-width: 40rem) {
+  [data-skin='lake'] .portrait {
+    width: 7.5rem;
+    height: 9.4rem;
+  }
+
+  [data-skin='lake'] .monogram {
+    font-size: 2.4rem;
+  }
+}
+
+/* Home */
+[data-skin='lake'] .interests {
+  gap: 1rem;
+}
+
+[data-skin='lake'] .interests li {
+  padding-left: 1.1rem;
+  border-left: 1px solid var(--border-strong);
+}
+
+[data-skin='lake'] .interests strong {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+[data-skin='lake'] .news time,
+[data-skin='lake'] .note-list time {
+  padding-top: 0.3rem;
+}
+
+/* Status badges become ink stamps on a case file. */
+[data-skin='lake'] .badge {
+  padding: 0.05rem 0.45rem;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 0.25em;
+  transform: rotate(-2deg);
+  opacity: 0.9;
+}
+
+[data-skin='lake'] .chip {
+  padding: 0.15rem 0.65rem;
+  border-color: var(--border-strong);
+  border-radius: var(--radius);
+  background: transparent;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+[data-skin='lake'] .tags li {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 400;
+}
+
+/* Publications */
+[data-skin='lake'] .pub-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+[data-skin='lake'] .pub-authors,
+[data-skin='lake'] .pub-venue {
+  font-size: 1em;
+}
+
+[data-skin='lake'] .pub-authors strong {
+  font-weight: 600;
+}
+
+[data-skin='lake'] .pub-note {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 400;
+}
+
+[data-skin='lake'] .bibtex pre,
+[data-skin='lake'] .prose pre {
+  border-radius: 0;
+}
+
+/* Cards framed like plaques. */
+[data-skin='lake'] .card {
+  padding: 1.35rem 1.5rem;
+  border-color: var(--border-strong);
+  outline: 1px solid var(--border);
+  outline-offset: -5px;
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+[data-skin='lake'] .card-meta {
+  font-size: 1.02rem;
+}
+
+/* CV */
+[data-skin='lake'] .button {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+[data-skin='lake'] .button:hover {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+[data-skin='lake'] .entry-sub {
+  font-size: 1.05rem;
+}
+
+[data-skin='lake'] .skills dt {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+/* Notes */
+[data-skin='lake'] .note-list a {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+/* Prose */
+[data-skin='lake'] .prose blockquote {
+  border-left: 2px solid var(--border-strong);
+  font-style: italic;
+}
+
+[data-skin='lake'] .prose th {
+  font-family: var(--font-label);
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -1016,23 +1419,17 @@ h3 .badge {
   color: var(--muted);
 }
 
-.prose hr {
-  border: 0;
+[data-skin='lake'] .prose hr {
   border-top: 3px double var(--border-strong);
 }
 
-/* Shiki renders both themes inline; the dark one is the default here. */
-:root:not([data-theme='light']) .astro-code,
-:root:not([data-theme='light']) .astro-code span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-}
-
-/* ---------- Print (the CV page prints cleanly) ---------- */
+/* ---------- Print (the CV page prints cleanly, always plain) ---------- */
 
 @media print {
   :root,
-  :root[data-theme='light'] {
+  :root[data-theme='dark'],
+  :root[data-skin='lake'],
+  :root[data-skin='lake'][data-theme='light'] {
     --bg: #fff;
     --surface: #fff;
     --text: #000;
@@ -1043,19 +1440,23 @@ h3 .badge {
     --border-strong: #999;
     --code-bg: #f4f4f4;
     --shadow: transparent;
-  }
-
-  body {
-    font-size: 11pt;
+    --font-heading: Georgia, 'Times New Roman', serif;
+    --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-label: var(--font-body);
+    --body-size: 10.5pt;
+    --label-size: 9pt;
+    --label-spacing: 0;
+    --label-transform: none;
   }
 
   body::before,
   body::after,
   .site-header,
   .site-footer,
+  .ornament,
   .no-print,
   .skip-link {
-    display: none;
+    display: none !important;
   }
 
   main {

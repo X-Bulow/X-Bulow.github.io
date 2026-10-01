@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { getMiscPages, getNotes } from '../../lib/collections';
+
+const notes = await getNotes();
+const pages = await getMiscPages();
+
+const items = [
+  {
+    title: 'Notes',
+    description: 'Technical notes, paper readings and research write-ups.',
+    meta: notes.length === 0 ? 'Nothing here yet' : `${notes.length} ${notes.length === 1 ? 'note' : 'notes'}`,
+    href: '/notes/',
+  },
+  ...pages.map((page) => ({
+    title: page.data.title,
+    description: page.data.description,
+    meta: page.data.draft ? 'Draft' : undefined,
+    href: `/misc/${page.id}/`,
+  })),
+];
+---
+
+<Base title="Misc" description="Notes, interests and other things outside research.">
+  <header class="page-header">
+    <h1>Misc</h1>
+    <p class="lede">Notes, interests and other things outside research.</p>
+  </header>
+
+  <div class="cards">
+    {
+      items.map((item) => (
+        <article class="card">
+          <h3>
+            <a href={item.href}>{item.title}</a>
+          </h3>
+          {item.meta && <p class="card-meta">{item.meta}</p>}
+          {item.description && <p class="card-summary">{item.description}</p>}
+          <a class="more" href={item.href}>
+            Open <Icon name="arrow" />
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</Base>

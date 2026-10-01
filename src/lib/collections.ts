@@ -3,6 +3,7 @@ import { news } from '../data/news';
 
 export type Project = CollectionEntry<'research'>;
 export type Note = CollectionEntry<'notes'>;
+export type MiscPage = CollectionEntry<'misc'>;
 
 export async function getProjects(): Promise<Project[]> {
   const entries = await getCollection('research');
@@ -13,6 +14,12 @@ export async function getProjects(): Promise<Project[]> {
 export async function getNotes(): Promise<Note[]> {
   const entries = await getCollection('notes', ({ data }) => import.meta.env.DEV || !data.draft);
   return entries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
+/** Published Misc pages in order. Drafts are included only in dev. */
+export async function getMiscPages(): Promise<MiscPage[]> {
+  const entries = await getCollection('misc', ({ data }) => import.meta.env.DEV || !data.draft);
+  return entries.sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
 }
 
 /** Whether an entry has a Markdown body, and therefore its own page. */
