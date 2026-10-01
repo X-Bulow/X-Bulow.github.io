@@ -1,0 +1,62 @@
+---
+import { site } from '../config';
+import type { Publication, PublicationStatus } from '../data/publications';
+
+interface Props {
+  items: Publication[];
+}
+
+const { items } = Astro.props;
+
+// Published papers need no badge; their venue says it all.
+const BADGE: Record<PublicationStatus, string | undefined> = {
+  published: undefined,
+  accepted: 'Accepted',
+  preprint: 'Preprint',
+  'under-review': 'Under review',
+};
+
+// Ignore equal-contribution markers such as "Zefeng Cheng*".
+const isMe = (author: string) => site.authorAliases.includes(author.replace(/[*†‡]+$/, ''));
+---
+
+<ol class="pubs">
+  {
+    items.map((pub) => (
+      <li class="pub">
+        <p class="pub-title">{pub.url ? <a href={pub.url}>{pub.title}</a> : pub.title}</p>
+        <p class="pub-authors">
+          {pub.authors.map((author, i) => (
+            <>
+              {i > 0 && ', '}
+              {isMe(author) ? <strong>{author}</strong> : author}
+            </>
+          ))}
+        </p>
+        <p class="pub-venue">
+          {BADGE[pub.status] && <span class={`badge badge-${pub.status}`}>{BADGE[pub.status]}</span>}
+          {pub.venue && <em>{pub.venue}</em>}
+          {!pub.venue?.includes(String(pub.year)) && <span>{pub.year}</span>}
+          {pub.note && <span class="pub-note">{pub.note}</span>}
+        </p>
+        {(pub.links?.length || pub.bibtex) && (
+          <div class="pub-links">
+            {pub.links?.map((link) => (
+              <a class="chip" href={link.url}>
+                {link.label}
+              </a>
+            ))}
+            {pub.bibtex && (
+              <details class="bibtex">
+                <summary class="chip">BibTeX</summary>
+                <pre>
+                  <code>{pub.bibtex.trim()}</code>
+                </pre>
+              </details>
+            )}
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ol>

@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import EmailLink from '../components/EmailLink.astro';
+import Icon from '../components/Icon.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { profileLinks, site } from '../config';
+import { awards, education, experience, service, skills, talks, teaching, type DatedEntry } from '../data/cv';
+import { publications } from '../data/publications';
+import { getProjects } from '../lib/collections';
+import { formatMonth } from '../lib/format';
+import { inline } from '../lib/markdown';
+
+const courseProjects = (await getProjects()).filter((p) => p.data.category === 'course');
+const pubs = [...publications].sort((a, b) => b.year - a.year);
+const datedSections: { title: string; entries: DatedEntry[] }[] = [
+  { title: 'Awards & Honors', entries: awards },
+  { title: 'Talks & Posters', entries: talks },
+  { title: 'Teaching & Mentoring', entries: teaching },
+  { title: 'Service', entries: service },
+].filter((section) => section.entries.length > 0);
+---
+
+<Base title="CV" description={`Curriculum vitae of ${site.name}.`}>
+  <header class="page-header cv-header">
+    <div>
+      <h1>Curriculum Vitae</h1>
+      <ul class="profile-links">
+        <li><EmailLink /></li>
+        {
+          profileLinks.map((link) => (
+            <li>
+              <a href={link.url}>
+                <Icon name={link.icon} />
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    {
+      site.cvPdf && (
+        <a class="button no-print" href={site.cvPdf}>
+          <Icon name="cv" /> Download PDF
+        </a>
+      )
+    }
+  </header>
+
+  <section>
+    <h2>Education</h2>
+    {
+      education.map((item) => (
+        <div class="entry">
+          <div class="entry-head">
+            <h3>{item.institution}</h3>
+            <span class="entry-date">{item.period}</span>
+          </div>
+          <p class="entry-sub">
+            {item.degree} · {item.location}
+          </p>
+          {item.details && (
+            <ul>
+              {item.details.map((detail) => (
+                <li set:html={inline(detail)} />
+              ))}
+            </ul>
+          )}
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>Research Experience</h2>
+    {
+      experience.map((item) => (
+        <div class="entry">
+          <div class="entry-head">
+            <h3>{item.title}</h3>
+            <span class="entry-date">{item.period}</span>
+          </div>
+          <p class="entry-sub" set:html={[item.org, item.location].filter(Boolean).map((s) => inline(s!)).join(' · ')} />
+          <p class="entry-sub" set:html={inline(item.role)} />
+          <ul>
+            {item.bullets.map((bullet) => (
+              <li set:html={inline(bullet)} />
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  {
+    pubs.length > 0 && (
+      <section>
+        <h2>Publications</h2>
+        <PublicationList items={pubs} />
+      </section>
+    )
+  }
+
+  {
+    datedSections.map((section) => (
+      <section>
+        <h2>{section.title}</h2>
+        <ul class="news">
+          {section.entries.map((entry) => (
+            <li>
+              <time datetime={entry.date}>{formatMonth(entry.date)}</time>
+              <span set:html={inline(entry.text)} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  {
+    courseProjects.length > 0 && (
+      <section>
+        <h2>Selected Projects</h2>
+        <ul class="plain-list">
+          {courseProjects.map((project) => (
+            <li>
+              <strong>{project.data.title}</strong>. {project.data.summary}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="skills">
+      {
+        skills.map((skill) => (
+          <>
+            <dt>{skill.category}</dt>
+            <dd>{skill.items}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+</Base>

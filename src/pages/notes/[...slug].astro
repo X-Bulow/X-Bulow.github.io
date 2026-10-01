@@ -1,0 +1,44 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getNotes, type Note } from '../../lib/collections';
+import { formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { data } = note;
+const { Content } = await render(note);
+---
+
+<Base title={data.title} description={data.description}>
+  <article>
+    <a class="back" href="/notes/">← Notes</a>
+    <header class="page-header">
+      <h1>{data.title}</h1>
+      <p class="card-meta">
+        <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+        {data.updated && <span> · Updated {formatDate(data.updated)}</span>}
+      </p>
+      {
+        data.tags.length > 0 && (
+          <ul class="tags">
+            {data.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>

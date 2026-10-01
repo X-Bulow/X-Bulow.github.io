@@ -1,4 +1,10 @@
-.venv/
-site/
-__pycache__/
-*.pyc
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# local files
+.DS_Store
+.env

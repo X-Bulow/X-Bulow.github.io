@@ -1,0 +1,43 @@
+---
+import { profileLinks, site } from '../config';
+import EmailLink from './EmailLink.astro';
+import Icon from './Icon.astro';
+
+const initials = site.name
+  .split(/\s+/)
+  .map((word) => word[0])
+  .join('');
+---
+
+<section class="profile">
+  {
+    site.photo ? (
+      <img class="avatar" src={site.photo} alt={`Photo of ${site.name}`} width="176" height="176" />
+    ) : (
+      <div class="avatar avatar-monogram" aria-hidden="true">
+        {initials}
+      </div>
+    )
+  }
+  <div class="profile-text">
+    <h1>{site.name}</h1>
+    <p class="position">
+      {site.position.map((line) => <span>{line}</span>)}
+    </p>
+    <p class="location"><Icon name="pin" />{site.location}</p>
+    <ul class="profile-links">
+      <li><EmailLink /></li>
+      {
+        profileLinks.map((link) => (
+          <li>
+            <a href={link.url}>
+              <Icon name={link.icon} />
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href="/cv/"><Icon name="cv" />CV</a></li>
+    </ul>
+  </div>
+</section>

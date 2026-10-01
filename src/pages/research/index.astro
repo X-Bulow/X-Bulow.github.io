@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/collections';
+
+const projects = await getProjects();
+const groups = [
+  { title: 'Research Projects', items: projects.filter((p) => p.data.category === 'research') },
+  { title: 'Software & Artifacts', items: projects.filter((p) => p.data.category === 'software') },
+  { title: 'Course Projects', items: projects.filter((p) => p.data.category === 'course') },
+].filter((group) => group.items.length > 0);
+---
+
+<Base title="Research" description="Research projects, software and course projects by Zefeng Cheng.">
+  <header class="page-header">
+    <h1>Research</h1>
+    <p class="lede">What I am working on and what I have built.</p>
+  </header>
+
+  {
+    groups.map((group) => (
+      <section>
+        <h2>{group.title}</h2>
+        <div class="cards">
+          {group.items.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</Base>

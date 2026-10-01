@@ -1,0 +1,22 @@
+---
+import type { NewsItem } from '../data/news';
+import { formatMonth } from '../lib/format';
+import { inline } from '../lib/markdown';
+
+interface Props {
+  items: NewsItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="news">
+  {
+    items.map((item) => (
+      <li>
+        <time datetime={item.date}>{formatMonth(item.date)}</time>
+        <span set:html={inline(item.text)} />
+      </li>
+    ))
+  }
+</ul>

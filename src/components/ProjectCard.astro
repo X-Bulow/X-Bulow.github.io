@@ -1,0 +1,39 @@
+---
+import { hasPage, type Project } from '../lib/collections';
+import { inline } from '../lib/markdown';
+import Icon from './Icon.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const href = hasPage(project) ? `/research/${project.id}/` : undefined;
+const meta = [data.role, data.affiliation, data.period].filter((part): part is string => Boolean(part));
+---
+
+<article class="card">
+  <h3>
+    {href ? <a href={href}>{data.title}</a> : data.title}
+    {data.status === 'ongoing' && <span class="badge badge-ongoing">Ongoing</span>}
+  </h3>
+  {meta.length > 0 && <p class="card-meta" set:html={meta.map(inline).join(' · ')} />}
+  <p class="card-summary">{data.summary}</p>
+  {
+    data.tags.length > 0 && (
+      <ul class="tags">
+        {data.tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    href && (
+      <a class="more" href={href}>
+        Details <Icon name="arrow" />
+      </a>
+    )
+  }
+</article>

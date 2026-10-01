@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { profileLinks } from '../config';
+import { publications } from '../data/publications';
+
+const years = [...new Set(publications.map((pub) => pub.year))].sort((a, b) => b - a);
+const scholar = profileLinks.find((link) => link.icon === 'scholar');
+---
+
+<Base title="Publications" description="Publications and manuscripts by Zefeng Cheng.">
+  <header class="page-header">
+    <h1>Publications</h1>
+    {
+      scholar && (
+        <p class="lede">
+          See also my <a href={scholar.url}>Google Scholar</a> profile.
+        </p>
+      )
+    }
+  </header>
+
+  {
+    years.map((year) => (
+      <section class="year-group">
+        <h2>{year}</h2>
+        <PublicationList items={publications.filter((pub) => pub.year === year)} />
+      </section>
+    ))
+  }
+  {publications.length === 0 && <p class="empty">Nothing here yet.</p>}
+</Base>

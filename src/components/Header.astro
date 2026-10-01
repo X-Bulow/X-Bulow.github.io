@@ -1,0 +1,45 @@
+---
+import { nav, site } from '../config';
+import { getNotes } from '../lib/collections';
+import Icon from './Icon.astro';
+
+const hasNotes = (await getNotes()).length > 0;
+const items = nav.filter((item) => item.href !== '/notes/' || hasNotes);
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="site-name" href="/">{site.name}</a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <Icon name="moon" class="when-light" />
+      <Icon name="sun" class="when-dark" />
+    </button>
+  </div>
+</header>
+
+<script>
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+</script>

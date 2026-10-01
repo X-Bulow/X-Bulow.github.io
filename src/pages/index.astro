@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsList from '../components/NewsList.astro';
+import Profile from '../components/Profile.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PublicationList from '../components/PublicationList.astro';
+import Icon from '../components/Icon.astro';
+import { Content as Bio } from '../data/bio.md';
+import { interests } from '../data/interests';
+import { publications } from '../data/publications';
+import { getProjects, sortedNews } from '../lib/collections';
+import { inline } from '../lib/markdown';
+
+const NEWS_ON_HOME = 5;
+const news = sortedNews();
+const featured = (await getProjects()).filter((project) => project.data.featured);
+const selected = publications.filter((pub) => pub.selected).sort((a, b) => b.year - a.year);
+---
+
+<Base>
+  <Profile />
+
+  <section class="prose bio">
+    <Bio />
+  </section>
+
+  <section>
+    <h2>Research Interests</h2>
+    <ul class="interests">
+      {
+        interests.map((interest) => (
+          <li>
+            <strong>{interest.title}</strong>
+            <span set:html={inline(interest.text)} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    news.length > 0 && (
+      <section>
+        <h2>News</h2>
+        <NewsList items={news.slice(0, NEWS_ON_HOME)} />
+        {news.length > NEWS_ON_HOME && (
+          <a class="more" href="/news/">
+            All news <Icon name="arrow" />
+          </a>
+        )}
+      </section>
+    )
+  }
+
+  {
+    featured.length > 0 && (
+      <section>
+        <h2>Research</h2>
+        <div class="cards">
+          {featured.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+        <a class="more" href="/research/">
+          All projects <Icon name="arrow" />
+        </a>
+      </section>
+    )
+  }
+
+  {
+    selected.length > 0 && (
+      <section>
+        <h2>Selected Publications</h2>
+        <PublicationList items={selected} />
+        <a class="more" href="/publications/">
+          All publications <Icon name="arrow" />
+        </a>
+      </section>
+    )
+  }
+</Base>

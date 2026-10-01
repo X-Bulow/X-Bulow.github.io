@@ -1,0 +1,21 @@
+---
+import { site } from '../config';
+import Icon from './Icon.astro';
+
+// The address is assembled in the browser so that scrapers reading the HTML
+// only see "user [at] domain".
+const [user, domain] = site.email.split('@');
+---
+
+<a class="email-link" href="#" data-user={user} data-domain={domain}>
+  <Icon name="email" /><span class="email-text">{user} [at] {domain}</span>
+</a>
+
+<script>
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('.email-link')) {
+    const address = `${link.dataset.user}@${link.dataset.domain}`;
+    link.href = `mailto:${address}`;
+    const text = link.querySelector('.email-text');
+    if (text) text.textContent = address;
+  }
+</script>

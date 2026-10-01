@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsList from '../components/NewsList.astro';
+import { sortedNews } from '../lib/collections';
+---
+
+<Base title="News" description="News and updates from Zefeng Cheng.">
+  <header class="page-header">
+    <h1>News</h1>
+  </header>
+  <NewsList items={sortedNews()} />
+</Base>

@@ -1,0 +1,13 @@
+---
+import { site } from '../config';
+import { formatDate } from '../lib/format';
+
+const built = new Date();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© {built.getFullYear()} {site.name}</p>
+    <p>Last updated {formatDate(built)}</p>
+  </div>
+</footer>
