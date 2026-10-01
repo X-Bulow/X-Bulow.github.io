@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#1f4f9e"/>
-  <text x="32" y="42" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="600" fill="#ffffff">ZC</text>
+  <rect width="64" height="64" rx="12" fill="#0f171a"/>
+  <g fill="none" stroke="#c9a24f" stroke-width="2.6" stroke-linejoin="round">
+    <path d="M32 8 54 20.5v25L32 58 10 45.5v-25z" fill="#c9a24f" fill-opacity=".12"/>
+    <path d="M32 8 54 20.5 32 33 10 20.5z" fill="#c9a24f" fill-opacity=".3"/>
+    <path d="M32 33v25M32 33 10 20.5M32 33l22-12.5"/>
+  </g>
 </svg>

@@ -2,6 +2,7 @@
 import { nav, site } from '../config';
 import { getNotes } from '../lib/collections';
 import Icon from './Icon.astro';
+import Ornament from './Ornament.astro';
 
 const hasNotes = (await getNotes()).length > 0;
 const items = nav.filter((item) => item.href !== '/notes/' || hasNotes);
@@ -12,7 +13,10 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="site-name" href="/">{site.name}</a>
+    <a class="site-name" href="/">
+      <Ornament name="cube" class="site-mark" />
+      <span>{site.name}</span>
+    </a>
     <nav aria-label="Main">
       <ul>
         {
@@ -26,7 +30,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         }
       </ul>
     </nav>
-    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+    <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light and dark mode">
       <Icon name="moon" class="when-light" />
       <Icon name="sun" class="when-dark" />
     </button>
@@ -36,7 +40,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 <script>
   document.querySelector('.theme-toggle')?.addEventListener('click', () => {
     const root = document.documentElement;
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
     root.dataset.theme = next;
     try {
       localStorage.setItem('theme', next);

@@ -1,12 +1,14 @@
 ---
 import { site } from '../config';
 import { formatDate } from '../lib/format';
+import Ornament from './Ornament.astro';
 
 const built = new Date();
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
+    <Ornament name="crow" class="footer-crow" />
     <p>© {built.getFullYear()} {site.name}</p>
     <p>Last updated {formatDate(built)}</p>
   </div>
